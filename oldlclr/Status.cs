@@ -8,10 +8,10 @@ namespace oldlclr
     public class Status : IDisposable, ICloneable
     {
         /// <summary>
-        /// Intanciate reciever in process heap
+        /// Intanciate receiver in process heap
         /// </summary>
         /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_reciever_hdlr_status_create")]
+        [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_create")]
         static extern IntPtr CreateI();
 
         /// <summary>
@@ -19,7 +19,7 @@ namespace oldlclr
         /// </summary>
         /// <param name="objPtr"></param>
         /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_reciever_hdlr_status_retain")]
+        [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_retain")]
         static extern uint Retain(IntPtr objPtr);
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace oldlclr
         /// </summary>
         /// <param name="objPtr"></param>
         /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_reciever_hdlr_status_release")]
+        [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_release")]
         static extern uint Release(IntPtr objPtr);
 
 
@@ -36,7 +36,7 @@ namespace oldlclr
         /// </summary>
         /// <param name="objPtr"></param>
         /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_reciever_hdlr_status_set_started_time_of_processing")]
+        [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_set_started_time_of_processing")]
         static extern int SetStartedTimeOfProcessing(IntPtr objPtr, IntPtr strPtr);
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace oldlclr
         /// </summary>
         /// <param name="objPtr"></param>
         /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_reciever_hdlr_status_get_started_time_of_processing")]
+        [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_get_started_time_of_processing")]
         static extern IntPtr GetStartedTimeOfProcessing(IntPtr objPtr);
 
 
@@ -54,7 +54,7 @@ namespace oldlclr
         /// </summary>
         /// <param name="objPtr"></param>
         /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_reciever_hdlr_status_set_started_time_of_loading")]
+        [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_set_started_time_of_loading")]
         static extern int SetStartedTimeOfLoading(IntPtr objPtr, IntPtr strPtr);
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace oldlclr
         /// </summary>
         /// <param name="objPtr"></param>
         /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_reciever_hdlr_status_get_started_time_of_loading")]
+        [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_get_started_time_of_loading")]
         static extern IntPtr GetStartedTimeOfLoading(IntPtr objPtr);
 
 
@@ -73,7 +73,7 @@ namespace oldlclr
         /// </summary>
         /// <param name="objPtr"></param>
         /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_reciever_hdlr_status_set_finished_time_of_processing")]
+        [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_set_finished_time_of_processing")]
         static extern int SetFinishedTimeOfProcessing(IntPtr objPtr, IntPtr strPtr);
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace oldlclr
         /// </summary>
         /// <param name="objPtr"></param>
         /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_reciever_hdlr_status_get_finished_time_of_processing")]
+        [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_get_finished_time_of_processing")]
         static extern IntPtr GetFinishedTimeOfProcessing(IntPtr objPtr);
 
 
@@ -91,7 +91,7 @@ namespace oldlclr
         /// </summary>
         /// <param name="objPtr"></param>
         /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_reciever_hdlr_status_set_finished_time_of_loading")]
+        [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_set_finished_time_of_loading")]
         static extern int SetFinishedTimeOfLoading(IntPtr objPtr, IntPtr strPtr);
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace oldlclr
         /// </summary>
         /// <param name="objPtr"></param>
         /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_reciever_hdlr_status_get_data_name")]
+        [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_get_data_name")]
         static extern IntPtr GetDataName(IntPtr objPtr);
 
 
@@ -109,7 +109,7 @@ namespace oldlclr
         /// </summary>
         /// <param name="objPtr"></param>
         /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_reciever_hdlr_status_set_data_name")]
+        [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_set_data_name")]
         static extern int SetDataName(IntPtr objPtr, IntPtr strPtr);
 
 
@@ -118,7 +118,7 @@ namespace oldlclr
         /// </summary>
         /// <param name="objPtr"></param>
         /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_reciever_hdlr_status_get_finished_time_of_loading")]
+        [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_get_finished_time_of_loading")]
         static extern IntPtr GetFinishedTimeOfLoading(IntPtr objPtr);
 
 
@@ -127,7 +127,7 @@ namespace oldlclr
         /// </summary>
         /// <param name="objPtr"></param>
         /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_reciever_hdlr_status_set_processed_count")]
+        [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_set_processed_count")]
         static extern int SetProcessedCount(IntPtr objPtr, uint processedCount);
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace oldlclr
         /// </summary>
         /// <param name="objPtr"></param>
         /// <returns></returns>          
-        [DllImport("oldl", EntryPoint = "oldl_reciever_hdlr_status_get_processed_count")]
+        [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_get_processed_count")]
         static extern int GetProcessedCount(IntPtr objPtr, out uint processedCount);
 
 
@@ -146,7 +146,7 @@ namespace oldlclr
         /// </summary>
         /// <param name="objPtr"></param>
         /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_reciever_hdlr_status_set_processing_status")]
+        [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_set_processing_status")]
         static extern int SetStatusCode(IntPtr objPtr, int statusCode);
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace oldlclr
         /// </summary>
         /// <param name="objPtr"></param>
         /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_reciever_hdlr_status_get_processing_status")]
+        [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_get_processing_status")]
         static extern int GetStatusCode(IntPtr objPtr, ref int statusCode);
 
 
@@ -163,7 +163,7 @@ namespace oldlclr
         /// </summary>
         /// <param name="objPtr"></param>
         /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_reciever_hdlr_status_to_json")]
+        [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_to_json")]
         static extern IntPtr ToJsonStr(IntPtr objPtr);
 
 

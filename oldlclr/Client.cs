@@ -41,7 +41,7 @@ namespace oldlclr
         /// </summary>
         /// <param name="objPtr"></param>
         /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_client_get_reciever_status")]
+        [DllImport("oldl", EntryPoint = "oldl_client_get_receiver_status")]
         static extern IntPtr GetStatus(IntPtr objPtr);
 
 
