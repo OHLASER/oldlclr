@@ -320,13 +320,14 @@ namespace oldlclr
                 DateTime? startedLoading;
                 DateTime? finishedProcessing;
                 DateTime? startedProcessing;
+                string dataName;
 
                 finishedLoading = dataLinkService.TimeOfFinishedLoading;
                 startedLoading = dataLinkService.TimeOfStartedLoading;
 
                 finishedProcessing = dataLinkService.TimeOfFinishedProcessing;
                 startedProcessing = dataLinkService.TimeOfStartedProcessing;
-
+                dataName = dataLinkService.DataName;
 
                 
                 Status status;
@@ -335,7 +336,7 @@ namespace oldlclr
                 status.SetFinishedTimeOfLoading(finishedLoading);
                 status.SetStartedTimeOfProcessing(startedProcessing);
                 status.SetFinishedTimeOfProcessing(finishedProcessing);
-
+                status.SetDataName(dataName);
                 status.ProcessedCount = dataLinkService.ProcessingCount;
                 status.Code = dataLinkService.StatusCode;
                 result = status.ObjectPtr;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
 
 
 namespace oldlclr
@@ -94,6 +95,25 @@ namespace oldlclr
         static extern int SetFinishedTimeOfLoading(IntPtr objPtr, IntPtr strPtr);
 
         /// <summary>
+        /// Get data name
+        /// </summary>
+        /// <param name="objPtr"></param>
+        /// <returns></returns>
+        [DllImport("oldl", EntryPoint = "oldl_reciever_hdlr_status_get_data_name")]
+        static extern IntPtr GetDataName(IntPtr objPtr);
+
+
+
+        /// <summary>
+        /// Set data name
+        /// </summary>
+        /// <param name="objPtr"></param>
+        /// <returns></returns>
+        [DllImport("oldl", EntryPoint = "oldl_reciever_hdlr_status_set_data_name")]
+        static extern int SetDataName(IntPtr objPtr, IntPtr strPtr);
+
+
+        /// <summary>
         /// Get finished time of loading
         /// </summary>
         /// <param name="objPtr"></param>
@@ -114,9 +134,9 @@ namespace oldlclr
         /// Get processed count
         /// </summary>
         /// <param name="objPtr"></param>
-        /// <returns></returns>
+        /// <returns></returns>          
         [DllImport("oldl", EntryPoint = "oldl_reciever_hdlr_status_get_processed_count")]
-        static extern uint GetProcessedCount(IntPtr objPtr);
+        static extern int GetProcessedCount(IntPtr objPtr, out uint processedCount);
 
 
 
@@ -168,11 +188,15 @@ namespace oldlclr
         /// <summary>
         /// Laser processed count
         /// </summary>
+        
         public uint ProcessedCount
         {
             get
             {
-                return GetProcessedCount(ObjectPtr);
+                uint result;
+                result = 0;
+                GetProcessedCount(ObjectPtr, out result);
+                return result;
             }
             set
             {
@@ -203,6 +227,7 @@ namespace oldlclr
         /// <summary>
         /// Native Object pointer
         /// </summary>
+        
         public IntPtr ObjectPtr
         {
             get
@@ -448,6 +473,35 @@ namespace oldlclr
                 SetFinishedTimeOfProcessing(ObjectPtr, timeOfProcessing.ObjectPtr);
             }
         }
+
+
+        /// <summary>
+        /// set data name
+        /// </summary>
+        /// <param name="dataName"></param>
+        public void SetDataName(Str dataName)
+        {
+            if (dataName != null)
+            {
+                SetDataName(ObjectPtr, dataName.ObjectPtr);
+            }
+        }
+
+        /// <summary>
+        /// set data name
+        /// </summary>
+        /// <param name="dataName"></param>
+        public void SetDataName(string dataName)
+        {
+            if (dataName != null)
+            {
+                Str strObj;
+                strObj = new Str(dataName);
+                SetDataName(strObj);
+                strObj.Dispose();
+            }
+        }
+
 
         /// <summary>
         /// set finished time of processing

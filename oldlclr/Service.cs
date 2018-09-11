@@ -42,6 +42,15 @@ namespace oldlclr
         }
 
         /// <summary>
+        /// laser processing data name
+        /// </summary>
+        string DataName
+        {
+            get;
+        }
+
+
+        /// <summary>
         /// Processing count
         /// </summary>
         uint ProcessingCount
