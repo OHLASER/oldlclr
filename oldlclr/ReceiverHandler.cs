@@ -297,7 +297,7 @@ namespace oldlclr
             }
             else
             {
-                result = (int)ErrorCode.RECIEVER_IS_NOT_ATTACHED;
+                result = (int)ErrorCode.RECEIVER_IS_NOT_ATTACHED;
             }
 
 
