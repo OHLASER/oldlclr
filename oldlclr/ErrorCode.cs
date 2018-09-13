@@ -50,9 +50,9 @@ namespace oldlclr
         /// </summary>
         UNEXPECTED_STATUS = -9,
         /// <summary>
-        /// reciever is not attached
+        /// receiver is not attached
         /// </summary>
-        RECIEVER_IS_NOT_ATTACHED = -10,
+        RECEIVER_IS_NOT_ATTACHED = -10,
         /// <summary>
         /// not accept duplicated command.
         /// </summary>
@@ -62,8 +62,8 @@ namespace oldlclr
         /// </summary>
         INVALID_DATA_FORMAT = -12,
         /// <summary>
-        /// reciever is busy.
+        /// receiver is busy.
         /// </summary>
-        RECIVER_IS_BUSY = -13
+        RECEIVER_IS_BUSY = -13
     }
 }
