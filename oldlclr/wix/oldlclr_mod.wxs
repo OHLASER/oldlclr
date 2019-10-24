@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Module Id="oldl" Language="1033" Version="1.0.0.0">
+    <Package Id="A6B7133F-302D-4A3C-9A8D-5AC0C8944E3A" Manufacturer="Oh-Laser" InstallerVersion="200" />
+    <Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="oldlclrRoot" Name=".">
+				<Component Id="$(var.oldlclr.TargetFileName)" Guid="D52391F0-6D90-496B-A119-6F296C16A31D">
+					<File Source="$(var.oldlclr.TargetPath)" Checksum="yes" KeyPath="yes"/>
+				</Component>
+			</Directory>
+    </Directory>
+    <Dependency RequiredId="oldl.6C2A904A_F993_4AF2_9861_A08066D7A7BC" RequiredLanguage="0" />
+  </Module>
+</Wix>
