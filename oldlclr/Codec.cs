@@ -73,7 +73,7 @@ namespace oldlclr
         /// </summary>
         /// <param name="objPtr"></param>
         /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldle_codec_decode")]
+        [DllImport("oldl", EntryPoint = "oldl_codec_decode")]
         static extern int Decode(IntPtr objPtr, IntPtr strPtr);
 
 
@@ -83,7 +83,7 @@ namespace oldlclr
         /// </summary>
         /// <param name="objPtr"></param>
         /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldle_codec_encode")]
+        [DllImport("oldl", EntryPoint = "oldl_codec_encode")]
         static extern IntPtr Encode(IntPtr objPtr);
 
 

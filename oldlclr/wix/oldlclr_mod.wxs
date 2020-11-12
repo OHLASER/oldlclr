@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Module Id="oldl" Language="0" Version="1.0.0.0">
+  <Module Id="oldl" Language="0" Version="1.1.0.0">
     <Package Id="A6B7133F-302D-4A3C-9A8D-5AC0C8944E3A" Manufacturer="Oh-Laser" InstallerVersion="200" />
     <Directory Id="TARGETDIR" Name="SourceDir">
 			<Directory Id="oldlclrRoot" Name=".">
