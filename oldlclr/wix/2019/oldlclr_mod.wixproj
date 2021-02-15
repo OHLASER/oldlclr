@@ -22,7 +22,7 @@
     <Compile Include="oldlclr_mod.wxs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\msvs\2019\oldlclr.csproj">
+    <ProjectReference Include="..\..\msvs\2019\oldlclr.csproj">
       <Name>oldlclr</Name>
       <Project>{f34b1d6b-9a11-4092-90e4-410908384e5a}</Project>
       <Private>True</Private>
