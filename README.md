@@ -99,7 +99,7 @@ HARUKAに渡すデータは、16進数表記した文字列で渡します。
 
 加工データはJSON形式にデータ変換されたのちにHARUKAへ送信されます。olhrk_webでは図示のフローを経てREST APIにPOSTします。
 ![POST API image](docs/post_api_image00.PNG)
-[home.viewmodel.js](https://github.com/OHLASER/olhrk_web/Scripts/app/home.viewmodel.js) .createSubmitDataが参考になります。
+[home.viewmodel.js](https://github.com/OHLASER/olhrk_web/blob/master/Scripts/app/home.viewmodel.js) .createSubmitDataが参考になります。
 
 ### エラーを表すJSON書式
 |    |  名前  |  値の説明  |
