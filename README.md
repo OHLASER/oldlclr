@@ -98,7 +98,7 @@ HARUKAに渡すデータは、16進数表記した文字列で渡します。
 </div>
 
 加工データは図示のようにデータ変換して、REST APIにPOSTします。
-[POST API image](docs/post_api_image00.PNG)
+![POST API image](docs/post_api_image00.PNG)
 olhrk_webの[home.viewmodel.js](https://github.com/OHLASER/olhrk_web/Scripts/app/home.viewmodel.js) .createSubmitDataが参考になります。
 
 ### エラーを表すJSON書式
