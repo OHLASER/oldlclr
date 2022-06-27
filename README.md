@@ -1,6 +1,7 @@
 
-oldlclrは、実行中のHARUKAを制御するC#ライブラリです。以下の公開メソッドを備えています。
-下表のクラスが登録されています。一部クラスとメソッドはHARUKA側の利用で、クライアント側では使用を想定していません。
+oldlclrは、実行中のHARUKAを制御するC#ライブラリです。HARUKAとのプロセス間通信を行います。
+以下では公開クラス、メソッド、列挙型等の一覧とその説明を記載します。
+一部クラスとメソッドはHARUKA側の利用で、クライアント側では使用を想定していません。
 
 # oldlclr モジュール仕様
 ## クラス一覧
@@ -81,10 +82,38 @@ oldlclrは、実行中のHARUKAを制御するC#ライブラリです。以下�
 
 ### データ形式
 HARUKAに渡すデータは、16進数表記した文字列で渡します。
-<画像>
+<style>
+.data_format_ctnr
+{
+    padding: 3pt;
+    border: 1pt solid #000;
+    display: inline-block;
+}
+.data_format_table{
+    width: 200pt;
+    table-layout: fixed;
+}
+td
+{
+    border: 1pt solid #000;
+}
+</style>
+<div class="data_format_ctnr">変換前のデータ
+  <table class="data_format_table">
+    <tr><td>番号</td><td>0</td><td>1</td><td>2</td><td>3</td></tr>
+    <tr><td>データ</td><td>125</td><td>200</td><td>4</td><td>15</td></tr>
+  </table>
+</div>
+⇒
+<div class="data_format_ctnr">16進表記の文字列変換
+  <table class="data_format_table">
+    <tr><td>番号</td><td>0</td><td>1</td><td>2</td><td>3</td></tr>
+    <tr><td>データ</td><td>7D</td><td>C8</td><td>04</td><td>0F</td></tr>
+  </table>
+</div>
 
 加工データは図示のようにデータ変換して、REST APIにPOSTします。
-<画像>
+[POST API image](docs/post_api_image00.PNG)
 [home.viewmodel.js](example.com) createSubmitDataが参考になります。
 
 ### エラーを表すJSON書式
