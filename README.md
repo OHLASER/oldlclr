@@ -82,29 +82,14 @@ oldlclrは、実行中のHARUKAを制御するC#ライブラリです。HARUKA�
 
 ### データ形式
 HARUKAに渡すデータは、16進数表記した文字列で渡します。
-<style>
-.data_format_ctnr
-{
-    padding: 3pt;
-    border: 1pt solid #000;
-    display: inline-block;
-}
-.data_format_table{
-    width: 200pt;
-    table-layout: fixed;
-}
-td
-{
-    border: 1pt solid #000;
-}
-</style>
+
 <div class="data_format_ctnr">変換前のデータ
   <table class="data_format_table">
     <tr><td>番号</td><td>0</td><td>1</td><td>2</td><td>3</td></tr>
     <tr><td>データ</td><td>125</td><td>200</td><td>4</td><td>15</td></tr>
   </table>
 </div>
-⇒
+↓
 <div class="data_format_ctnr">16進表記の文字列変換
   <table class="data_format_table">
     <tr><td>番号</td><td>0</td><td>1</td><td>2</td><td>3</td></tr>
@@ -114,7 +99,7 @@ td
 
 加工データは図示のようにデータ変換して、REST APIにPOSTします。
 [POST API image](docs/post_api_image00.PNG)
-[home.viewmodel.js](example.com) createSubmitDataが参考になります。
+olhrk_webの[home.viewmodel.js](https://github.com/OHLASER/olhrk_web/Scripts/app/home.viewmodel.js) .createSubmitDataが参考になります。
 
 ### エラーを表すJSON書式
 |    |  名前  |  値の説明  |
