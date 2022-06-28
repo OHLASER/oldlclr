@@ -4,8 +4,9 @@ oldlclrは、実行中のHARUKAを制御するC#ライブラリです。HARUKA�
 以下では公開クラス、メソッド、列挙型等の一覧とその説明を記載します。
 一部クラスとメソッドはHARUKA側の利用で、クライアント側では使用を想定していません。
 
-# oldlclr モジュール仕様
-## クラス一覧
+## モジュール仕様
+
+### クラス一覧
 |    |  クラス名  |  説明  |  クライアント側での使用頻度  |
 | ---- | ---- | ---- | ---- |
 |  1.  |  Client  |  HARUKAと通信を行います。  |  高  |
@@ -17,39 +18,41 @@ oldlclrは、実行中のHARUKAを制御するC#ライブラリです。HARUKA�
 |  7.  |  Status  |  HARUKAの状態を表します。当該データは、Setter、Getterを備えていますが、クライアント側で使用するには、煩雑な処理になります。  |  高  |
 |  8.  |  Str  |  アンマネージドオブジェクトのバイト配列を管理します。  |  低  |
 
-## 列挙型一覧
+### 列挙型一覧
 |    |  列挙型名  |  説明  |  クライアント側での使用頻度  |
 | ---- | ---- | ---- | ---- |
 |  1.  |  ErrorCode  |  oldlclr.Errorで得られるエラー番号と定数名の対応です。  |  高  |
 |  2.  |  StatusCode  |  HARUKAの状態を表す定数名と番号の対応です。  |  高  |
 
-## メソッド一覧
-### Clientクラス メソッド
+### メソッド一覧
+
+#### Clientクラス メソッド
 |    |  メソッド名  |  説明  |  備考  |
 | ---- | ---- | ---- | ---- |
 |  1.  |  GetStatus  |  HARUKAの状態を取得します。  |  加工データの書式については後述します。  |
 |  2.  |  LoadData  |  HARUKAに加工データを送ります。  |    |
 
-### Statusクラス メソッド
+#### Statusクラス メソッド
 |    |  メソッド名  |  説明  |  備考  |
 | ---- | ---- | ---- | ---- |
 |  1.  |  ToJson  |  HARUKAの状態をJson形式の文字列で取得します。  |  加工データの書式については後述します。  |
 |  2.  |  ToJsonStr  |  HARUKAの状態をアンマネージドオブジェクトのバイト配列として取得します。  |  加工データの書式については後述します。  |
 
-### Strクラス メソッド
+#### Strクラス メソッド
 |    |  メソッド名  |  説明  |  備考  |
 | ---- | ---- | ---- | ---- |
 |  1.  |  GetContentsAsString  |  アンマネージドオブジェクトのバイト配列をUTF8の文字列とみなして、UTF16文字列変換します。  |    |
 
-### Errorクラス メソッド
+#### Errorクラス メソッド
 |    |  メソッド名  |  説明  |  備考  |
 | ---- | ---- | ---- | ---- |
 |  1.  |  GetError  |  HARUKAとの通信において、直前のエラー番号を返します。  |    |
 |  2.  |  SetError  |  直前のエラー番号を設定します。  |  処理中でエラー値をクリアしたい場合に使用します。  |
 |  3.  |  GetErrorAsJson  |  エラー番号をJsonで返します。  |  書式は後述します。  |
 
-## 列挙型 定数一覧
-### ErrorCode 定数
+### 列挙型 定数一覧
+
+#### ErrorCode 定数
 |    |  定数名  |  値  |  説明  |
 | ---- | ---- | ---- | ---- |
 |  1.  |  NO_ERROR  |  0  |  エラーなし  |
@@ -67,21 +70,30 @@ oldlclrは、実行中のHARUKAを制御するC#ライブラリです。HARUKA�
 |  13.  |  INVALID_DATA_FORMAT  |  -12  |  無効なデータ書式  |
 |  14.  |  RECEIVER_IS_BUSY  |  -13  |  HARUKAは処理がたまっているため応答できない  |
 
-### StatusCode 定数
+#### StatusCode 定数
 |    |  定数名  |  値  |  説明  |
 | ---- | ---- | ---- | ---- |
 |  1.  |  Idle  |  0  |  特に処理を行っていない  |
 |  2.  |  Processing  |  1  |  加工中  |
 |  3.  |  Loading  |  2  |  読込中  |
 
-## HARUKAへのデータ書き込み書式
+### HARUKAの状態を表すJSON書式
+|    |  名前  |  値の説明  |
+| ---- | ---- | ---- |
+|    |  data_name  |  HARUKAが現在ロードしているデータ名  |
+|    |  processed_count  |  ロードしているデータの加工回数  |
+|    |  status  |  HARUKAの状態(oldlclr.StatusCode)  |
+|    |  finished_time_of_processing  |  加工を最後に終了した時間(yyyy-mm-dd hh-mm-ss)  |
+|    |  finished_time_of_loading  |  データを読み込んだ時間(yyyy-mm-dd hh-mm-ss)  |
+
+### HARUKAへのデータ書き込み書式
 |    |  名前  |  値の説明  |
 | ---- | ---- | ---- |
 |  1.  |  data_name  |  HARUKAのメインウインドウに表示されるデータ名  |
 |  2.  |  data_type  |  ロードするデータのタイプ(.pdf、.aiなど、’.’と拡張子の組み合わせ)  |
 |  3.  |  data  |  加工データを16進数表記した文字列  |
 
-### データ形式
+#### データ形式
 HARUKAに渡すデータは、16進数表記した文字列で渡します。
 
 <div class="data_format_ctnr">変換前のデータ
@@ -102,7 +114,7 @@ HARUKAに渡すデータは、16進数表記した文字列で渡します。
 ![POST API image](docs/post_api_image00.PNG)
 [home.viewmodel.js](https://github.com/OHLASER/olhrk_web/blob/master/Scripts/app/home.viewmodel.js) .createSubmitDataが参考になります。
 
-### エラーを表すJSON書式
+#### エラーを表すJSON書式
 |    |  名前  |  値の説明  |
 | ---- | ---- | ---- |
 |  1.  |  error_code  |  エラー番号 (oldlclr.ErrorCodeを参照のこと)  |
