@@ -80,11 +80,11 @@ oldlclrは、実行中のHARUKAを制御するC#ライブラリです。HARUKA�
 ### HARUKAの状態を表すJSON書式
 |    |  名前  |  値の説明  |
 | ---- | ---- | ---- |
-|    |  data_name  |  HARUKAが現在ロードしているデータ名  |
-|    |  processed_count  |  ロードしているデータの加工回数  |
-|    |  status  |  HARUKAの状態(oldlclr.StatusCode)  |
-|    |  finished_time_of_processing  |  加工を最後に終了した時間(yyyy-mm-dd hh-mm-ss)  |
-|    |  finished_time_of_loading  |  データを読み込んだ時間(yyyy-mm-dd hh-mm-ss)  |
+|  1.  |  data_name  |  HARUKAが現在ロードしているデータ名  |
+|  2.  |  processed_count  |  ロードしているデータの加工回数  |
+|  3.  |  status  |  HARUKAの状態(oldlclr.StatusCode)  |
+|  4.  |  finished_time_of_processing  |  加工を最後に終了した時間(yyyy-mm-dd hh-mm-ss)  |
+|  5.  |  finished_time_of_loading  |  データを読み込んだ時間(yyyy-mm-dd hh-mm-ss)  |
 
 ### HARUKAへのデータ書き込み書式
 |    |  名前  |  値の説明  |
