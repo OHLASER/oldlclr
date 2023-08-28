@@ -10,14 +10,14 @@ namespace oldlclr
         /// </summary>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_str_create_00")]
-        static extern IntPtr CreateI(byte[] byteArray, uint length);
+        private static extern IntPtr CreateI(byte[] byteArray, uint length);
 
         /// <summary>
         /// Intanciate reciever in process heap
         /// </summary>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_str_create_00")]
-        static extern IntPtr CreateI(IntPtr dataPtr, uint length);
+        private static extern IntPtr CreateI(IntPtr dataPtr, uint length);
 
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace oldlclr
         /// </summary>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_str_create_01")]
-        static extern IntPtr CreateI(byte[] byteArray);
+        private static extern IntPtr CreateI(byte[] byteArray);
 
         /// <summary>
         /// Increment reference count
@@ -33,7 +33,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_str_retain")]
-        static extern uint Retain(IntPtr objPtr);
+        private static extern uint Retain(IntPtr objPtr);
 
         /// <summary>
         /// Decrement reference count
@@ -41,7 +41,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_str_release")]
-        static extern uint Release(IntPtr objPtr);
+        private static extern uint Release(IntPtr objPtr);
 
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_str_get_length")]
-        static extern uint GetLength(IntPtr objPtr);
+        private static extern uint GetLength(IntPtr objPtr);
 
 
         /// <summary>
@@ -59,25 +59,13 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_str_copy_contents")]
-        static extern int CopyContents(IntPtr objPtr,
+        private static extern int CopyContents(IntPtr objPtr,
             byte[] buffer, uint size);
-
-
-        /// <summary>
-        /// Native object pointer
-        /// </summary>
-        private IntPtr ObjectPtrValue;
 
         /// <summary>
         /// Native Object pointer
         /// </summary>
-        public IntPtr ObjectPtr
-        {
-            get
-            {
-                return ObjectPtrValue;
-            }
-        }
+        public IntPtr ObjectPtr { get; private set; }
 
         /// <summary>
         /// Length of data
@@ -114,10 +102,7 @@ namespace oldlclr
         /// <summary>
         /// constructor 
         /// </summary>
-        public Str(byte[] byteArray)
-        {
-            AttachRef(CreateI(byteArray, (uint)byteArray.Length));
-        }
+        public Str(byte[] byteArray) => AttachRef(CreateI(byteArray, (uint)byteArray.Length));
 
         /// <summary>
         /// construct zero terminate utf8 string
@@ -130,28 +115,22 @@ namespace oldlclr
             byte[] strBytesZero;
             strBytesZero = new byte[strBytes.Length + 1];
             Array.Copy(strBytes, strBytesZero, strBytes.Length);
-            strBytesZero[strBytesZero.Length - 1] = 0;
+            strBytesZero[^1] = 0;
 
             AttachRef(CreateI(strBytesZero, (uint)strBytesZero.Length));
- 
+
         }
         /// <summary>
         /// constructor
         /// </summary>
         /// <param name="objPtr"></param>
-        internal Str(IntPtr objPtr, uint length)
-        {
-            AttachRef(CreateI(objPtr, length));
-        }
+        internal Str(IntPtr objPtr, uint length) => AttachRef(CreateI(objPtr, length));
 
         /// <summary>
         /// constructor
         /// </summary>
         /// <param name="objPtr"></param>
-        internal Str(IntPtr objPtr)
-        {
-            AttachRef(objPtr);
-        }
+        internal Str(IntPtr objPtr) => AttachRef(objPtr);
 
 
 
@@ -179,7 +158,7 @@ namespace oldlclr
             {
                 Release(ObjectPtr);
             }
-            ObjectPtrValue = objPtr;
+            ObjectPtr = objPtr;
         }
 
         object ICloneable.Clone()
@@ -231,7 +210,7 @@ namespace oldlclr
             if (strBytes.Length > 0)
             {
                 int length;
-                if (strBytes[strBytes.Length - 1] == 0)
+                if (strBytes[^1] == 0)
                 {
                     length = strBytes.Length - 1;
                 }

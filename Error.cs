@@ -14,7 +14,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_error_get_error")]
-        static extern int GetErrorI();
+        private static extern int GetErrorI();
 
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_error_set_error")]
-        static extern void SetErrorI(int error);
+        private static extern void SetErrorI(int error);
 
 
 
@@ -33,7 +33,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_error_get_error_as_json")]
-        static extern IntPtr GetErrorAsJsonI();
+        private static extern IntPtr GetErrorAsJsonI();
 
 
 
@@ -42,20 +42,14 @@ namespace oldlclr
         /// </summary>
         /// <param name="objPtr"></param>
         /// <returns></returns>
-        public static int GetError()
-        {
-            return GetErrorI();
-        }
+        public static int GetError() => GetErrorI();
 
         /// <summary>
         /// get error code on this thread.
         /// </summary>
         /// <param name="objPtr"></param>
         /// <returns></returns>
-        public static void SetError(ErrorCode code)
-        {
-            SetErrorI((int)code);
-        }
+        public static void SetError(ErrorCode code) => SetErrorI((int)code);
 
         /// <summary>
         /// get error code on this thread.

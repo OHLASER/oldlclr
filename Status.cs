@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
 
 
 namespace oldlclr
@@ -12,7 +11,7 @@ namespace oldlclr
         /// </summary>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_create")]
-        static extern IntPtr CreateI();
+        private static extern IntPtr CreateI();
 
         /// <summary>
         /// Increment reference count
@@ -20,7 +19,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_retain")]
-        static extern uint Retain(IntPtr objPtr);
+        private static extern uint Retain(IntPtr objPtr);
 
         /// <summary>
         /// Decrement reference count
@@ -28,7 +27,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_release")]
-        static extern uint Release(IntPtr objPtr);
+        private static extern uint Release(IntPtr objPtr);
 
 
         /// <summary>
@@ -37,7 +36,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_set_started_time_of_processing")]
-        static extern int SetStartedTimeOfProcessing(IntPtr objPtr, IntPtr strPtr);
+        private static extern int SetStartedTimeOfProcessing(IntPtr objPtr, IntPtr strPtr);
 
         /// <summary>
         /// Get started time of processing
@@ -45,7 +44,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_get_started_time_of_processing")]
-        static extern IntPtr GetStartedTimeOfProcessing(IntPtr objPtr);
+        private static extern IntPtr GetStartedTimeOfProcessing(IntPtr objPtr);
 
 
 
@@ -55,7 +54,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_set_started_time_of_loading")]
-        static extern int SetStartedTimeOfLoading(IntPtr objPtr, IntPtr strPtr);
+        private static extern int SetStartedTimeOfLoading(IntPtr objPtr, IntPtr strPtr);
 
         /// <summary>
         /// Get started time of loading
@@ -63,7 +62,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_get_started_time_of_loading")]
-        static extern IntPtr GetStartedTimeOfLoading(IntPtr objPtr);
+        private static extern IntPtr GetStartedTimeOfLoading(IntPtr objPtr);
 
 
 
@@ -74,7 +73,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_set_finished_time_of_processing")]
-        static extern int SetFinishedTimeOfProcessing(IntPtr objPtr, IntPtr strPtr);
+        private static extern int SetFinishedTimeOfProcessing(IntPtr objPtr, IntPtr strPtr);
 
         /// <summary>
         /// Get finished time of processing
@@ -82,7 +81,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_get_finished_time_of_processing")]
-        static extern IntPtr GetFinishedTimeOfProcessing(IntPtr objPtr);
+        private static extern IntPtr GetFinishedTimeOfProcessing(IntPtr objPtr);
 
 
 
@@ -92,7 +91,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_set_finished_time_of_loading")]
-        static extern int SetFinishedTimeOfLoading(IntPtr objPtr, IntPtr strPtr);
+        private static extern int SetFinishedTimeOfLoading(IntPtr objPtr, IntPtr strPtr);
 
         /// <summary>
         /// Get data name
@@ -100,7 +99,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_get_data_name")]
-        static extern IntPtr GetDataName(IntPtr objPtr);
+        private static extern IntPtr GetDataName(IntPtr objPtr);
 
 
 
@@ -110,7 +109,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_set_data_name")]
-        static extern int SetDataName(IntPtr objPtr, IntPtr strPtr);
+        private static extern int SetDataName(IntPtr objPtr, IntPtr strPtr);
 
 
         /// <summary>
@@ -119,7 +118,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_get_finished_time_of_loading")]
-        static extern IntPtr GetFinishedTimeOfLoading(IntPtr objPtr);
+        private static extern IntPtr GetFinishedTimeOfLoading(IntPtr objPtr);
 
 
         /// <summary>
@@ -128,7 +127,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_set_processed_count")]
-        static extern int SetProcessedCount(IntPtr objPtr, uint processedCount);
+        private static extern int SetProcessedCount(IntPtr objPtr, uint processedCount);
 
         /// <summary>
         /// Get processed count
@@ -136,7 +135,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>          
         [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_get_processed_count")]
-        static extern int GetProcessedCount(IntPtr objPtr, out uint processedCount);
+        private static extern int GetProcessedCount(IntPtr objPtr, out uint processedCount);
 
 
 
@@ -147,7 +146,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_set_processing_status")]
-        static extern int SetStatusCode(IntPtr objPtr, int statusCode);
+        private static extern int SetStatusCode(IntPtr objPtr, int statusCode);
 
         /// <summary>
         /// Get processed count
@@ -155,7 +154,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_get_processing_status")]
-        static extern int GetStatusCode(IntPtr objPtr, ref int statusCode);
+        private static extern int GetStatusCode(IntPtr objPtr, ref int statusCode);
 
 
         /// <summary>
@@ -164,7 +163,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_to_json")]
-        static extern IntPtr ToJsonStr(IntPtr objPtr);
+        private static extern IntPtr ToJsonStr(IntPtr objPtr);
 
 
 
@@ -172,7 +171,7 @@ namespace oldlclr
         /// <summary>
         /// date time format
         /// </summary>
-        static string DateTimeFormat
+        private static string DateTimeFormat
         {
             get
             {
@@ -188,7 +187,7 @@ namespace oldlclr
         /// <summary>
         /// Laser processed count
         /// </summary>
-        
+
         public uint ProcessedCount
         {
             get
@@ -198,10 +197,7 @@ namespace oldlclr
                 GetProcessedCount(ObjectPtr, out result);
                 return result;
             }
-            set
-            {
-                SetProcessedCount(ObjectPtr, value);
-            }
+            set => SetProcessedCount(ObjectPtr, value);
         }
 
         /// <summary>
@@ -209,44 +205,24 @@ namespace oldlclr
         /// </summary>
         public StatusCode Code
         {
-            get
-            {
-                return GetStatusCode();
-            }
-            set
-            {
-                SetStatusCode(value);
-            }
+            get => GetStatusCode();
+            set => SetStatusCode(value);
         }
-
-        /// <summary>
-        /// Native object pointer
-        /// </summary>
-        private IntPtr ObjectPtrValue;
 
         /// <summary>
         /// Native Object pointer
         /// </summary>
-        
-        public IntPtr ObjectPtr
-        {
-            get
-            {
-                return ObjectPtrValue;
-            }
-        }
+
+        public IntPtr ObjectPtr { get; private set; }
 
         private bool disposedValue;
 
         /// <summary>
         /// constructor
         /// </summary>
-        public Status()
-        {
-            AttachRef(CreateI());
-        }
+        public Status() => AttachRef(CreateI());
 
-       
+
 
         /// <summary>
         /// destructor
@@ -280,7 +256,7 @@ namespace oldlclr
             {
                 Release(ObjectPtr);
             }
-            ObjectPtrValue = objPtr;
+            ObjectPtr = objPtr;
         }
 
         object ICloneable.Clone()
@@ -350,10 +326,7 @@ namespace oldlclr
         /// set started time of processing
         /// </summary>
         /// <param name="timeOfProcessing"></param>
-        public void SetStartedTimeOfProcessing(DateTime timeOfProcessing)
-        {
-            SetStartedTimeOfProcessing(timeOfProcessing.ToString(DateTimeFormat));
-        }
+        public void SetStartedTimeOfProcessing(DateTime timeOfProcessing) => SetStartedTimeOfProcessing(timeOfProcessing.ToString(DateTimeFormat));
         /// <summary>
         /// set started time of processing
         /// </summary>
@@ -397,10 +370,7 @@ namespace oldlclr
         /// set started time of loading
         /// </summary>
         /// <param name="timeOfLoading"></param>
-        public void SetStartedTimeOfLoading(DateTime timeOfLoading)
-        {
-            SetStartedTimeOfLoading(timeOfLoading.ToString(DateTimeFormat));
-        }
+        public void SetStartedTimeOfLoading(DateTime timeOfLoading) => SetStartedTimeOfLoading(timeOfLoading.ToString(DateTimeFormat));
 
         /// <summary>
         /// set started time of loading
@@ -445,10 +415,7 @@ namespace oldlclr
         /// set finished time of loading
         /// </summary>
         /// <param name="timeOfLoading"></param>
-        public void SetFinishedTimeOfLoading(DateTime timeOfLoading)
-        {
-            SetFinishedTimeOfLoading(timeOfLoading.ToString(DateTimeFormat));
-        }
+        public void SetFinishedTimeOfLoading(DateTime timeOfLoading) => SetFinishedTimeOfLoading(timeOfLoading.ToString(DateTimeFormat));
 
         /// <summary>
         /// set finished time of loading
@@ -522,10 +489,7 @@ namespace oldlclr
         /// set finished time of processing
         /// </summary>
         /// <param name="timeOfProcessing"></param>
-        public void SetFinishedTimeOfProcessing(DateTime timeOfProcessing)
-        {
-            SetFinishedTimeOfProcessing(timeOfProcessing.ToString(DateTimeFormat));
-        }
+        public void SetFinishedTimeOfProcessing(DateTime timeOfProcessing) => SetFinishedTimeOfProcessing(timeOfProcessing.ToString(DateTimeFormat));
 
         /// <summary>
         /// set finished time of processing
@@ -543,10 +507,7 @@ namespace oldlclr
         /// set status code
         /// </summary>
         /// <param name="code"></param>
-        public void SetStatusCode(StatusCode code)
-        {
-            SetStatusCode(ObjectPtr, (int)code);
-        }
+        public void SetStatusCode(StatusCode code) => SetStatusCode(ObjectPtr, (int)code);
 
 
         /// <summary>

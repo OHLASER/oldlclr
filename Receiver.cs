@@ -44,7 +44,7 @@ namespace oldlclr
             public IntPtrFuncIntPtr GetStatus;
         }
 
-        
+
 
 
 
@@ -53,7 +53,7 @@ namespace oldlclr
         /// </summary>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_receiver_create")]
-        static extern IntPtr CreateI();
+        private static extern IntPtr CreateI();
 
         /// <summary>
         /// Increment reference count
@@ -61,7 +61,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_receiver_retain")]
-        static extern uint Retain(IntPtr objPtr);
+        private static extern uint Retain(IntPtr objPtr);
 
         /// <summary>
         /// Decrement reference count
@@ -69,9 +69,9 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_receiver_release")]
-        static extern uint Release(IntPtr objPtr);
+        private static extern uint Release(IntPtr objPtr);
 
-       
+
         /// <summary>
         /// set receiver handler
         /// </summary>
@@ -79,7 +79,7 @@ namespace oldlclr
         /// <param name="handler"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_receiver_set_handler")]
-        static extern int SetHandler(IntPtr objPtr, IntPtr handler);
+        private static extern int SetHandler(IntPtr objPtr, IntPtr handler);
 
         /// <summary>
         /// get receiver handler
@@ -87,7 +87,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_receiver_get_handler")]
-        static extern IntPtr GetHandler(IntPtr objPtr);
+        private static extern IntPtr GetHandler(IntPtr objPtr);
 
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_receiver_start")]
-        static extern int Start(IntPtr objPtr);
+        private static extern int Start(IntPtr objPtr);
 
 
         /// <summary>
@@ -105,39 +105,20 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_receiver_stop_communication")]
-        static extern int Stop(IntPtr objPtr);
-
-
-
-        /// <summary>
-        /// Native object pointer
-        /// </summary>
-        private IntPtr ObjectPtrValue;
+        private static extern int Stop(IntPtr objPtr);
 
         /// <summary>
         /// Native Object pointer
         /// </summary>
-        public IntPtr ObjectPtr
-        {
-            get
-            {
-                return ObjectPtrValue;
-            }
-        }
+        public IntPtr ObjectPtr { get; private set; }
 
         /// <summary>
         /// data link service
         /// </summary>
         public Service Service
         {
-            get
-            {
-                return GetService();
-            }
-            set
-            {
-                SetService(value);
-            }
+            get => GetService();
+            set => SetService(value);
         }
 
 
@@ -147,11 +128,8 @@ namespace oldlclr
         /// <summary>
         /// constructor 
         /// </summary>
-        public Receiver()
-        {
-            AttachRef(CreateI());
-        }
-         ~Receiver()
+        public Receiver() => AttachRef(CreateI());
+        ~Receiver()
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(false);
@@ -175,7 +153,7 @@ namespace oldlclr
             {
                 Release(ObjectPtr);
             }
-            ObjectPtrValue = objPtr;
+            ObjectPtr = objPtr;
 
         }
 
@@ -186,7 +164,7 @@ namespace oldlclr
             Retain(result.ObjectPtr);
 
             return result;
-  
+
         }
         protected virtual void Dispose(bool disposing)
         {
@@ -217,20 +195,12 @@ namespace oldlclr
         /// <summary>
         /// start listening to message from client
         /// </summary>
-        public void Start()
-        {
-
-            Start(ObjectPtr);
-
-        }
+        public void Start() => Start(ObjectPtr);
 
         /// <summary>
         /// stop listening to message from client
         /// </summary>
-        public void Stop()
-        {
-            Stop(ObjectPtr);
-        }
+        public void Stop() => Stop(ObjectPtr);
 
 
         /// <summary>
@@ -281,9 +251,10 @@ namespace oldlclr
             else
             {
                 ReceiverHandler recieverHdlr;
-                recieverHdlr = new ReceiverHandler();
-
-                recieverHdlr.DataLinkService = dataLinkService;
+                recieverHdlr = new ReceiverHandler
+                {
+                    DataLinkService = dataLinkService
+                };
 
                 SetHandler(ObjectPtr, recieverHdlr.UnmanagedPtr);
 

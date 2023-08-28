@@ -13,7 +13,7 @@ namespace oldlclr
         /// </summary>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_codec_create")]
-        static extern IntPtr CreateI();
+        private static extern IntPtr CreateI();
 
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_codec_retain")]
-        static extern uint Retain(IntPtr objPtr);
+        private static extern uint Retain(IntPtr objPtr);
 
         /// <summary>
         /// Decrement reference count
@@ -30,7 +30,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_codec_release")]
-        static extern uint Release(IntPtr objPtr);
+        private static extern uint Release(IntPtr objPtr);
 
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_codec_get_processing_data")]
-        static extern IntPtr GetProcessingData(IntPtr objPtr);
+        private static extern IntPtr GetProcessingData(IntPtr objPtr);
 
         /// <summary>
         /// set processing data
@@ -47,7 +47,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_codec_set_processing_data")]
-        static extern int SetProcessingData(IntPtr objPtr, IntPtr strPtr);
+        private static extern int SetProcessingData(IntPtr objPtr, IntPtr strPtr);
 
 
 
@@ -57,7 +57,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_codec_get_data_type")]
-        static extern IntPtr GetDataType(IntPtr objPtr);
+        private static extern IntPtr GetDataType(IntPtr objPtr);
 
         /// <summary>
         /// set processing data type
@@ -65,7 +65,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_codec_set_data_type")]
-        static extern int SetDataType(IntPtr objPtr, IntPtr strPtr);
+        private static extern int SetDataType(IntPtr objPtr, IntPtr strPtr);
 
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_codec_decode")]
-        static extern int Decode(IntPtr objPtr, IntPtr strPtr);
+        private static extern int Decode(IntPtr objPtr, IntPtr strPtr);
 
 
 
@@ -84,27 +84,12 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_codec_encode")]
-        static extern IntPtr Encode(IntPtr objPtr);
-
-
-
-
-
-        /// <summary>
-        /// Native object pointer
-        /// </summary>
-        private IntPtr ObjectPtrValue;
+        private static extern IntPtr Encode(IntPtr objPtr);
 
         /// <summary>
         /// Native Object pointer
         /// </summary>
-        public IntPtr ObjectPtr
-        {
-            get
-            {
-                return ObjectPtrValue;
-            }
-        }
+        public IntPtr ObjectPtr { get; private set; }
 
 
 
@@ -162,10 +147,7 @@ namespace oldlclr
                 return result;
             }
 
-            set
-            {
-                SetProcessingData(value);
-            }
+            set => SetProcessingData(value);
         }
 
 
@@ -174,10 +156,7 @@ namespace oldlclr
         /// <summary>
         /// constructor 
         /// </summary>
-        public Codec()
-        {
-            AttachRef(CreateI());
-        }
+        public Codec() => AttachRef(CreateI());
         ~Codec()
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
@@ -202,13 +181,10 @@ namespace oldlclr
             {
                 Release(ObjectPtr);
             }
-            ObjectPtrValue = objPtr;
+            ObjectPtr = objPtr;
         }
 
-        public object Clone()
-        {
-            throw new NotImplementedException();
-        }
+        public object Clone() => throw new NotImplementedException();
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
@@ -239,7 +215,7 @@ namespace oldlclr
         /// Get processing data as str
         /// </summary>
         /// <returns></returns>
-        Str GetProcessingDataAsStr()
+        private Str GetProcessingDataAsStr()
         {
             IntPtr strPtr;
             strPtr = GetProcessingData(ObjectPtr);
@@ -259,7 +235,7 @@ namespace oldlclr
         /// set processing data
         /// </summary>
         /// <param name="data"></param>
-        void SetProcessingData(byte[] data)
+        private void SetProcessingData(byte[] data)
         {
             if (data != null)
             {
@@ -280,7 +256,7 @@ namespace oldlclr
         /// set processing data as Str
         /// </summary>
         /// <param name="strData"></param>
-        void SetProcessingDataAsStr(Str strData)
+        private void SetProcessingDataAsStr(Str strData)
         {
             if (strData != null)
             {
@@ -296,7 +272,7 @@ namespace oldlclr
         /// get data type as Str
         /// </summary>
         /// <returns></returns>
-        Str GetDataTypeAsStr()
+        private Str GetDataTypeAsStr()
         {
             IntPtr typePtr;
             typePtr = GetDataType(ObjectPtr);
@@ -351,10 +327,7 @@ namespace oldlclr
             {
                 result = strData.Contents;
             }
-            if (strData != null)
-            {
-                strData.Dispose();
-            }
+            strData?.Dispose();
 
             return result;
         }

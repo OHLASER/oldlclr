@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace oldlclr
 {
@@ -18,7 +15,7 @@ namespace oldlclr
         /// </summary>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_client_create")]
-        static extern IntPtr CreateI();
+        private static extern IntPtr CreateI();
 
         /// <summary>
         /// Increment reference count
@@ -26,7 +23,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_client_retain")]
-        static extern uint Retain(IntPtr objPtr);
+        private static extern uint Retain(IntPtr objPtr);
 
         /// <summary>
         /// Decrement reference count
@@ -34,7 +31,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_client_release")]
-        static extern uint Release(IntPtr objPtr);
+        private static extern uint Release(IntPtr objPtr);
 
         /// <summary>
         /// get data link reciever status
@@ -42,7 +39,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_client_get_receiver_status")]
-        static extern IntPtr GetStatus(IntPtr objPtr);
+        private static extern IntPtr GetStatus(IntPtr objPtr);
 
 
         /// <summary>
@@ -51,7 +48,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_client_load_data")]
-        static extern int LoadData(IntPtr objPtr, byte[] data, uint dataLength, byte[] cStrName);
+        private static extern int LoadData(IntPtr objPtr, byte[] data, uint dataLength, byte[] cStrName);
 
 
         /// <summary>
@@ -60,7 +57,7 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_client_connect")]
-        static extern int Connect(IntPtr objPtr);
+        private static extern int Connect(IntPtr objPtr);
 
         /// <summary>
         /// disconnect data link reciever
@@ -68,14 +65,14 @@ namespace oldlclr
         /// <param name="objPtr"></param>
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_client_disconnect")]
-        static extern int Disconnect(IntPtr objPtr);
+        private static extern int Disconnect(IntPtr objPtr);
 
 
         /// <summary>
         /// generate name
         /// </summary>
         /// <returns></returns>
-        static string GenerateDataName()
+        private static string GenerateDataName()
         {
             string result;
             result = null;
@@ -93,20 +90,9 @@ namespace oldlclr
         }
 
         /// <summary>
-        /// Native object pointer
-        /// </summary>
-        private IntPtr ObjectPtrValue;
-
-        /// <summary>
         /// Native Object pointer
         /// </summary>
-        public IntPtr ObjectPtr
-        {
-            get
-            {
-                return ObjectPtrValue;
-            }
-        }
+        public IntPtr ObjectPtr { get; private set; }
 
 
 
@@ -116,10 +102,7 @@ namespace oldlclr
         /// <summary>
         /// constructor 
         /// </summary>
-        public Client()
-        {
-            AttachRef(CreateI());
-        }
+        public Client() => AttachRef(CreateI());
         ~Client()
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
@@ -144,7 +127,7 @@ namespace oldlclr
             {
                 Release(ObjectPtr);
             }
-            ObjectPtrValue = objPtr;
+            ObjectPtr = objPtr;
 
         }
 
@@ -219,10 +202,7 @@ namespace oldlclr
             result = false;
 
 
-            if (dataName == null)
-            {
-                dataName = GenerateDataName();
-            }
+            dataName ??= GenerateDataName();
 
             byte[] dataNameByteArray;
             dataNameByteArray = System.Text.Encoding.UTF8.GetBytes(dataName);

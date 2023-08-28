@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace oldlclr
 {
@@ -65,7 +63,7 @@ namespace oldlclr
         {
             get;
         }
-        
+
 
 
         /// <summary>
@@ -76,7 +74,7 @@ namespace oldlclr
         ErrorCode LoadProcessingData(string dataType, byte[] data, string dataName);
 
 
-        
+
 
     }
 }

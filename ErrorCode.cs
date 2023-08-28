@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace oldlclr
+﻿namespace oldlclr
 {
     /// <summary>
     /// data link protocol error code
@@ -16,7 +12,7 @@ namespace oldlclr
         /// <summary>
         /// out of memory
         /// </summary>
-        OUT_OF_MEMORY =	-1,
+        OUT_OF_MEMORY = -1,
         /// <summary>
         /// invalidate arguments.
         /// </summary>

@@ -41,7 +41,7 @@ namespace oldlclr
         /// <summary>
         /// magic number for unmanaged object
         /// </summary>
-        static int MagicCode
+        private static int MagicCode
         {
             get
             {
@@ -52,9 +52,9 @@ namespace oldlclr
                 byteArray = Encoding.UTF8.GetBytes(magicWord);
 
                 int result;
-                result = byteArray[0] << (8 * 3)
-                    | byteArray[1] << (8 * 2) 
-                    | byteArray[2] << (8 * 1) 
+                result = (byteArray[0] << (8 * 3))
+                    | (byteArray[1] << (8 * 2))
+                    | (byteArray[2] << (8 * 1))
                     | byteArray[3];
 
                 return result;
@@ -106,7 +106,7 @@ namespace oldlclr
             vtbl = Marshal.PtrToStructure<Receiver.HandlerIVtbl>(objLayout.Vtbl);
 
             vtbl.Release(objPtr);
-           
+
 
         }
 
@@ -114,7 +114,7 @@ namespace oldlclr
         /// <summary>
         /// Virtual function table
         /// </summary>
-        Receiver.HandlerIVtbl Vtbl;
+        private Receiver.HandlerIVtbl Vtbl;
         /// <summary>
         /// アンマネージドオブジェクトに渡す構造体
         /// </summary>
@@ -173,7 +173,7 @@ namespace oldlclr
         public uint Retain(IntPtr obj)
         {
             uint result;
-            lock(this)
+            lock (this)
             {
                 result = ++RefCount;
             }
@@ -215,20 +215,16 @@ namespace oldlclr
                     UnmanagedPtr = IntPtr.Zero;
 
                 }
-                
+
             }
-            
+
             return result;
         }
         /// <summary>
         /// decrement reference count
         /// </summary>
         /// <returns></returns>
-        internal uint Release()
-        {
-            return Release(UnmanagedPtr);
-
-        }
+        internal uint Release() => Release(UnmanagedPtr);
 
 
         public int LoadData(IntPtr objPtr, IntPtr data, uint length, IntPtr dataNamePtr)
@@ -262,8 +258,8 @@ namespace oldlclr
                     {
                         byte tempValue;
                         tempValue = Marshal.ReadByte(dataNamePtr, dataLength);
-                            
-                        
+
+
                         if (tempValue == 0)
                         {
                             break;
@@ -329,7 +325,7 @@ namespace oldlclr
                 startedProcessing = dataLinkService.TimeOfStartedProcessing;
                 dataName = dataLinkService.DataName;
 
-                
+
                 Status status;
                 status = new Status();
                 status.SetStartedTimeOfLoading(startedLoading);
@@ -345,7 +341,7 @@ namespace oldlclr
             return result;
         }
 
-        uint RefCount; 
+        private uint RefCount;
 
     }
 }
