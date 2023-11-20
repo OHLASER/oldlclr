@@ -70,15 +70,7 @@ namespace oldlclr
         /// <summary>
         /// Length of data
         /// </summary>
-        public int Length
-        {
-            get
-            {
-                int result;
-                result = (int)GetLength(ObjectPtr);
-                return result;
-            }
-        }
+        public int Length => (int)GetLength(ObjectPtr);
 
         /// <summary>
         /// DataContents
@@ -87,9 +79,7 @@ namespace oldlclr
         {
             get
             {
-
-                byte[] result;
-                result = new byte[Length];
+                byte[] result = new byte[Length];
                 CopyContents(ObjectPtr, result, (uint)result.Length);
 
                 return result;
@@ -110,10 +100,8 @@ namespace oldlclr
         /// <param name="str"></param>
         public Str(string str)
         {
-            byte[] strBytes;
-            strBytes = System.Text.Encoding.UTF8.GetBytes(str);
-            byte[] strBytesZero;
-            strBytesZero = new byte[strBytes.Length + 1];
+            byte[] strBytes = System.Text.Encoding.UTF8.GetBytes(str);
+            byte[] strBytesZero = new byte[strBytes.Length + 1];
             Array.Copy(strBytes, strBytesZero, strBytes.Length);
             strBytesZero[^1] = 0;
 
@@ -163,9 +151,7 @@ namespace oldlclr
 
         object ICloneable.Clone()
         {
-
-            Str result;
-            result = (Str)base.MemberwiseClone();
+            Str result = (Str)base.MemberwiseClone();
 
             Retain(result.ObjectPtr);
 
@@ -202,22 +188,15 @@ namespace oldlclr
         /// <returns></returns>
         public string GetContentsAsString()
         {
-            byte[] strBytes;
-
-            strBytes = Contents;
-            string result;
-            result = null;
+            byte[] strBytes = Contents;
+            string result = null;
             if (strBytes.Length > 0)
             {
-                int length;
-                if (strBytes[^1] == 0)
+                int length = strBytes[^1] switch
                 {
-                    length = strBytes.Length - 1;
-                }
-                else
-                {
-                    length = strBytes.Length;
-                }
+                    0 => strBytes.Length - 1,
+                    _ => strBytes.Length,
+                };
                 result = System.Text.Encoding.UTF8.GetString(strBytes, 0, length);
             }
 

@@ -171,18 +171,7 @@ namespace oldlclr
         /// <summary>
         /// date time format
         /// </summary>
-        private static string DateTimeFormat
-        {
-            get
-            {
-                string result;
-                result = null;
-
-                result = "yyyy-MM-dd HH:mm:ss";
-
-                return result;
-            }
-        }
+        private static string DateTimeFormat => "yyyy-MM-dd HH:mm:ss";
 
         /// <summary>
         /// Laser processed count
@@ -192,9 +181,7 @@ namespace oldlclr
         {
             get
             {
-                uint result;
-                result = 0;
-                GetProcessedCount(ObjectPtr, out result);
+                GetProcessedCount(ObjectPtr, out var result);
                 return result;
             }
             set => SetProcessedCount(ObjectPtr, value);
@@ -220,7 +207,10 @@ namespace oldlclr
         /// <summary>
         /// constructor
         /// </summary>
-        public Status() => AttachRef(CreateI());
+        public Status()
+        {
+            AttachRef(CreateI());
+        }
 
 
 
@@ -261,8 +251,7 @@ namespace oldlclr
 
         object ICloneable.Clone()
         {
-            Status result;
-            result = (Status)this.MemberwiseClone();
+            Status result = (Status)this.MemberwiseClone();
 
             Retain(result.ObjectPtr);
 
@@ -315,10 +304,8 @@ namespace oldlclr
         {
             if (timeOfProcessing != null)
             {
-                Str strObj;
-                strObj = new Str(timeOfProcessing);
+                using Str strObj = new(timeOfProcessing);
                 SetStartedTimeOfProcessing(strObj);
-                strObj.Dispose();
             }
         }
 
@@ -326,7 +313,11 @@ namespace oldlclr
         /// set started time of processing
         /// </summary>
         /// <param name="timeOfProcessing"></param>
-        public void SetStartedTimeOfProcessing(DateTime timeOfProcessing) => SetStartedTimeOfProcessing(timeOfProcessing.ToString(DateTimeFormat));
+        public void SetStartedTimeOfProcessing(DateTime timeOfProcessing)
+        {
+            SetStartedTimeOfProcessing(timeOfProcessing.ToString(DateTimeFormat));
+        }
+
         /// <summary>
         /// set started time of processing
         /// </summary>
@@ -359,10 +350,8 @@ namespace oldlclr
         {
             if (timeOfLoading != null)
             {
-                Str strObj;
-                strObj = new Str(timeOfLoading);
+                using Str strObj = new(timeOfLoading);
                 SetStartedTimeOfLoading(strObj);
-                strObj.Dispose();
             }
         }
 
@@ -370,7 +359,10 @@ namespace oldlclr
         /// set started time of loading
         /// </summary>
         /// <param name="timeOfLoading"></param>
-        public void SetStartedTimeOfLoading(DateTime timeOfLoading) => SetStartedTimeOfLoading(timeOfLoading.ToString(DateTimeFormat));
+        public void SetStartedTimeOfLoading(DateTime timeOfLoading)
+        {
+            SetStartedTimeOfLoading(timeOfLoading.ToString(DateTimeFormat));
+        }
 
         /// <summary>
         /// set started time of loading
@@ -404,10 +396,8 @@ namespace oldlclr
         {
             if (timeOfLoading != null)
             {
-                Str strObj;
-                strObj = new Str(timeOfLoading);
+                using Str strObj = new(timeOfLoading);
                 SetFinishedTimeOfLoading(strObj);
-                strObj.Dispose();
             }
         }
 
@@ -415,7 +405,10 @@ namespace oldlclr
         /// set finished time of loading
         /// </summary>
         /// <param name="timeOfLoading"></param>
-        public void SetFinishedTimeOfLoading(DateTime timeOfLoading) => SetFinishedTimeOfLoading(timeOfLoading.ToString(DateTimeFormat));
+        public void SetFinishedTimeOfLoading(DateTime timeOfLoading)
+        {
+            SetFinishedTimeOfLoading(timeOfLoading.ToString(DateTimeFormat));
+        }
 
         /// <summary>
         /// set finished time of loading
@@ -462,10 +455,8 @@ namespace oldlclr
         {
             if (dataName != null)
             {
-                Str strObj;
-                strObj = new Str(dataName);
+                using Str strObj = new(dataName);
                 SetDataName(strObj);
-                strObj.Dispose();
             }
         }
 
@@ -478,10 +469,8 @@ namespace oldlclr
         {
             if (timeOfProcessing != null)
             {
-                Str strObj;
-                strObj = new Str(timeOfProcessing);
+                using Str strObj = new(timeOfProcessing);
                 SetFinishedTimeOfProcessing(strObj);
-                strObj.Dispose();
             }
         }
 
@@ -489,7 +478,10 @@ namespace oldlclr
         /// set finished time of processing
         /// </summary>
         /// <param name="timeOfProcessing"></param>
-        public void SetFinishedTimeOfProcessing(DateTime timeOfProcessing) => SetFinishedTimeOfProcessing(timeOfProcessing.ToString(DateTimeFormat));
+        public void SetFinishedTimeOfProcessing(DateTime timeOfProcessing)
+        {
+            SetFinishedTimeOfProcessing(timeOfProcessing.ToString(DateTimeFormat));
+        }
 
         /// <summary>
         /// set finished time of processing
@@ -507,7 +499,10 @@ namespace oldlclr
         /// set status code
         /// </summary>
         /// <param name="code"></param>
-        public void SetStatusCode(StatusCode code) => SetStatusCode(ObjectPtr, (int)code);
+        public void SetStatusCode(StatusCode code)
+        {
+            SetStatusCode(ObjectPtr, (int)code);
+        }
 
 
         /// <summary>
@@ -516,12 +511,9 @@ namespace oldlclr
         /// <returns></returns>
         public StatusCode GetStatusCode()
         {
-            StatusCode result;
-            int code;
-            code = 0;
+            int code = 0;
             GetStatusCode(ObjectPtr, ref code);
-            result = (StatusCode)code;
-            return result;
+            return (StatusCode)code;
         }
 
         /// <summary>
@@ -530,10 +522,8 @@ namespace oldlclr
         /// <returns></returns>
         public Str ToJsonStr()
         {
-            Str result;
-            IntPtr jsonPtr;
-            result = null;
-            jsonPtr = ToJsonStr(ObjectPtr);
+            Str result = null;
+            IntPtr jsonPtr = ToJsonStr(ObjectPtr);
             if (IntPtr.Zero != jsonPtr)
             {
                 result = new Str(jsonPtr);
@@ -547,20 +537,8 @@ namespace oldlclr
         /// <returns></returns>
         public string ToJson()
         {
-            string result;
-            result = null;
-
-            Str jsonStr;
-            jsonStr = ToJsonStr();
-            if (jsonStr != null)
-            {
-
-                result = jsonStr.GetContentsAsString();
-                jsonStr.Dispose();
-            }
-
-            return result;
+            using Str jsonStr = ToJsonStr();
+            return jsonStr?.GetContentsAsString();
         }
-
     }
 }

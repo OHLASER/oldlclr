@@ -115,7 +115,7 @@ namespace oldlclr
         /// <summary>
         /// data link service
         /// </summary>
-        public Service Service
+        public IService Service
         {
             get => GetService();
             set => SetService(value);
@@ -128,7 +128,11 @@ namespace oldlclr
         /// <summary>
         /// constructor 
         /// </summary>
-        public Receiver() => AttachRef(CreateI());
+        public Receiver()
+        {
+            AttachRef(CreateI());
+        }
+
         ~Receiver()
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
@@ -159,8 +163,7 @@ namespace oldlclr
 
         public object Clone()
         {
-            Receiver result;
-            result = (Receiver)base.MemberwiseClone();
+            Receiver result = (Receiver)base.MemberwiseClone();
             Retain(result.ObjectPtr);
 
             return result;
@@ -195,34 +198,34 @@ namespace oldlclr
         /// <summary>
         /// start listening to message from client
         /// </summary>
-        public void Start() => Start(ObjectPtr);
+        public void Start()
+        {
+            Start(ObjectPtr);
+        }
 
         /// <summary>
         /// stop listening to message from client
         /// </summary>
-        public void Stop() => Stop(ObjectPtr);
+        public void Stop()
+        {
+            Stop(ObjectPtr);
+        }
 
 
         /// <summary>
         /// get service
         /// </summary>
         /// <returns></returns>
-        public Service GetService()
+        public IService GetService()
         {
-            IntPtr objPtr;
-            objPtr = GetHandler(ObjectPtr);
+            IntPtr objPtr = GetHandler(ObjectPtr);
 
-            Service result;
-            result = null;
+            IService result = null;
             if (objPtr != IntPtr.Zero)
             {
-                ReceiverHandler recieverHdlr;
-                recieverHdlr = ReceiverHandler.DecodeRecieverHandler(objPtr);
+                ReceiverHandler recieverHdlr = ReceiverHandler.DecodeRecieverHandler(objPtr);
 
-                if (recieverHdlr != null)
-                {
-                    result = recieverHdlr.DataLinkService;
-                }
+                result = recieverHdlr?.DataLinkService;
             }
             return result;
         }
@@ -232,15 +235,13 @@ namespace oldlclr
         /// set service
         /// </summary>
         /// <param name="dataLinkService"></param>
-        public void SetService(Service dataLinkService)
+        public void SetService(IService dataLinkService)
         {
-            IntPtr objPtr;
-            objPtr = GetHandler(ObjectPtr);
+            IntPtr objPtr = GetHandler(ObjectPtr);
 
             if (objPtr != IntPtr.Zero)
             {
-                ReceiverHandler recieverHdlr;
-                recieverHdlr = ReceiverHandler.DecodeRecieverHandler(objPtr);
+                ReceiverHandler recieverHdlr = ReceiverHandler.DecodeRecieverHandler(objPtr);
 
                 if (recieverHdlr != null)
                 {
@@ -250,8 +251,7 @@ namespace oldlclr
             }
             else
             {
-                ReceiverHandler recieverHdlr;
-                recieverHdlr = new ReceiverHandler
+                ReceiverHandler recieverHdlr = new()
                 {
                     DataLinkService = dataLinkService
                 };

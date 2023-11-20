@@ -100,27 +100,17 @@ namespace oldlclr
         {
             get
             {
-                Str strObj;
-                strObj = GetDataTypeAsStr();
-                string result;
-                result = null;
-                if (strObj != null)
-                {
-                    result = strObj.GetContentsAsString();
-                }
-                return result;
+                Str strObj = GetDataTypeAsStr();
+                return strObj?.GetContentsAsString();
             }
 
             set
             {
                 if (value != null)
                 {
-                    Str strObj;
-                    strObj = new Str(value);
+                    using Str strObj = new(value);
 
                     SetDataType(ObjectPtr, strObj.ObjectPtr);
-
-                    strObj.Dispose();
                 }
 
             }
@@ -133,18 +123,8 @@ namespace oldlclr
         {
             get
             {
-
-                byte[] result;
-                result = null;
-
-                Str strObj;
-                strObj = GetProcessingDataAsStr();
-                if (strObj != null)
-                {
-                    result = strObj.Contents;
-                    strObj.Dispose();
-                }
-                return result;
+                using Str strObj = GetProcessingDataAsStr();
+                return strObj?.Contents;
             }
 
             set => SetProcessingData(value);
@@ -156,7 +136,11 @@ namespace oldlclr
         /// <summary>
         /// constructor 
         /// </summary>
-        public Codec() => AttachRef(CreateI());
+        public Codec()
+        {
+            AttachRef(CreateI());
+        }
+
         ~Codec()
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
@@ -184,7 +168,11 @@ namespace oldlclr
             ObjectPtr = objPtr;
         }
 
-        public object Clone() => throw new NotImplementedException();
+        public object Clone()
+        {
+            throw new NotImplementedException();
+        }
+
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
@@ -217,13 +205,10 @@ namespace oldlclr
         /// <returns></returns>
         private Str GetProcessingDataAsStr()
         {
-            IntPtr strPtr;
-            strPtr = GetProcessingData(ObjectPtr);
-            Str result;
-            result = null;
+            IntPtr strPtr = GetProcessingData(ObjectPtr);
+            Str result = null;
             if (IntPtr.Zero != strPtr)
             {
-
                 result = new Str(strPtr);
             }
 
@@ -239,11 +224,9 @@ namespace oldlclr
         {
             if (data != null)
             {
-                Str strData;
-                strData = new Str(data);
+                using Str strData = new(data);
 
                 SetProcessingDataAsStr(strData);
-                strData.Dispose();
             }
             else
             {
@@ -274,10 +257,8 @@ namespace oldlclr
         /// <returns></returns>
         private Str GetDataTypeAsStr()
         {
-            IntPtr typePtr;
-            typePtr = GetDataType(ObjectPtr);
-            Str result;
-            result = null;
+            IntPtr typePtr = GetDataType(ObjectPtr);
+            Str result = null;
             if (IntPtr.Zero != typePtr)
             {
                 result = new Str(typePtr);
@@ -298,12 +279,9 @@ namespace oldlclr
 
         internal Str EncodeI()
         {
+            IntPtr encodedPtr = Encode(ObjectPtr);
 
-            IntPtr encodedPtr;
-            encodedPtr = Encode(ObjectPtr);
-
-            Str result;
-            result = null;
+            Str result = null;
             if (IntPtr.Zero != encodedPtr)
             {
                 result = new Str(encodedPtr);
@@ -318,18 +296,8 @@ namespace oldlclr
         /// <returns></returns>
         public byte[] Encode()
         {
-            byte[] result;
-            Str strData;
-            result = null;
-            strData = EncodeI();
-
-            if (strData != null)
-            {
-                result = strData.Contents;
-            }
-            strData?.Dispose();
-
-            return result;
+            using Str strData = EncodeI();
+            return strData?.Contents;
         }
 
     }

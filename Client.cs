@@ -72,22 +72,7 @@ namespace oldlclr
         /// generate name
         /// </summary>
         /// <returns></returns>
-        private static string GenerateDataName()
-        {
-            string result;
-            result = null;
-
-            string df;
-            df = "yyyy-MM-dd-HH-mm-ss";
-
-            string dataName;
-            dataName = string.Format(df, DateTime.Now);
-
-            result = string.Format("{0}.pdf", dataName);
-
-            return result;
-
-        }
+        private static string GenerateDataName() => $"{DateTime.Now:yyyy-MM-dd-HH-mm-ss}.pdf";
 
         /// <summary>
         /// Native Object pointer
@@ -172,13 +157,8 @@ namespace oldlclr
         /// <returns></returns>
         public Status GetStatus()
         {
-            Status result;
-
-            IntPtr statusPtr;
-            statusPtr = IntPtr.Zero;
-
-            result = null;
-            statusPtr = GetStatus(ObjectPtr);
+            Status result = null;
+            IntPtr statusPtr = GetStatus(ObjectPtr);
             if (statusPtr != IntPtr.Zero)
             {
                 result = new Status();
@@ -197,27 +177,17 @@ namespace oldlclr
         /// <returns></returns>
         public bool LoadData(byte[] data, string dataName)
         {
-            bool result;
-
-            result = false;
-
-
             dataName ??= GenerateDataName();
 
-            byte[] dataNameByteArray;
-            dataNameByteArray = System.Text.Encoding.UTF8.GetBytes(dataName);
+            byte[] dataNameByteArray = System.Text.Encoding.UTF8.GetBytes(dataName);
 
             byte[] dataNameByteArray1 = new byte[dataNameByteArray.Length + 1];
             Array.Copy(dataNameByteArray, dataNameByteArray1, dataNameByteArray.Length);
             dataNameByteArray1[dataNameByteArray.Length] = 0;
 
-            int state;
-            state = LoadData(ObjectPtr, data, (uint)data.Length, dataNameByteArray1);
+            int state = LoadData(ObjectPtr, data, (uint)data.Length, dataNameByteArray1);
 
-            result = state == 0;
-
-
-            return result;
+            return state == 0;
         }
 
 
@@ -227,11 +197,8 @@ namespace oldlclr
         /// <returns></returns>
         public bool Connect()
         {
-            int state;
-            state = Connect(ObjectPtr);
-            bool result;
-            result = state == 0;
-            return result;
+            int state = Connect(ObjectPtr);
+            return state == 0;
         }
 
         /// <summary>
@@ -240,11 +207,8 @@ namespace oldlclr
         /// <returns></returns>
         public bool Disconnect()
         {
-            int state;
-            state = Disconnect(ObjectPtr);
-            bool result;
-            result = state == 0;
-            return result;
+            int state = Disconnect(ObjectPtr);
+            return state == 0;
         }
 
     }

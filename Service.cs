@@ -5,7 +5,7 @@ namespace oldlclr
     /// <summary>
     /// server
     /// </summary>
-    public interface Service
+    public interface IService
     {
         /// <summary>
         /// time of started loading
@@ -71,7 +71,7 @@ namespace oldlclr
         /// </summary>
         /// <param name="dataType"></param>
         /// <param name="data"></param>
-        ErrorCode LoadProcessingData(string dataType, byte[] data, string dataName);
+        ErrorCode LoadProcessingData(string dataType, byte[] data, IntPtr dataName);
 
 
 
