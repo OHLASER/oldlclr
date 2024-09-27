@@ -6,9 +6,68 @@ namespace oldlclr
     /// <summary>
     /// External api server module
     /// </summary>
-    public class Receiver
+    public partial class Receiver
         : ICloneable, IDisposable
     {
+        private static partial class NativeMethods
+        {
+            /// <summary>
+            /// Intanciate receiver in process heap
+            /// </summary>
+            /// <returns></returns>
+            [LibraryImport("oldl", EntryPoint = "oldl_receiver_create")]
+            public static partial IntPtr CreateI();
+
+            /// <summary>
+            /// Increment reference count
+            /// </summary>
+            /// <param name="objPtr"></param>
+            /// <returns></returns>
+            [LibraryImport("oldl", EntryPoint = "oldl_receiver_retain")]
+            public static partial uint Retain(IntPtr objPtr);
+
+            /// <summary>
+            /// Decrement reference count
+            /// </summary>
+            /// <param name="objPtr"></param>
+            /// <returns></returns>
+            [LibraryImport("oldl", EntryPoint = "oldl_receiver_release")]
+            public static partial uint Release(IntPtr objPtr);
+
+            /// <summary>
+            /// set receiver handler
+            /// </summary>
+            /// <param name="objPtr"></param>
+            /// <param name="handler"></param>
+            /// <returns></returns>
+            [LibraryImport("oldl", EntryPoint = "oldl_receiver_set_handler")]
+            public static partial int SetHandler(IntPtr objPtr, IntPtr handler);
+
+            /// <summary>
+            /// get receiver handler
+            /// </summary>
+            /// <param name="objPtr"></param>
+            /// <returns></returns>
+            [LibraryImport("oldl", EntryPoint = "oldl_receiver_get_handler")]
+            public static partial IntPtr GetHandler(IntPtr objPtr);
+
+            /// <summary>
+            /// start to listening message from client
+            /// </summary>
+            /// <param name="objPtr"></param>
+            /// <returns></returns>
+            [LibraryImport("oldl", EntryPoint = "oldl_receiver_start")]
+            public static partial int Start(IntPtr objPtr);
+
+            /// <summary>
+            /// stop to listening message from client
+            /// </summary>
+            /// <param name="objPtr"></param>
+            /// <returns></returns>
+            [LibraryImport("oldl", EntryPoint = "oldl_receiver_stop_communication")]
+            public static partial int Stop(IntPtr objPtr);
+        }
+
         /// <summary>
         /// delegate to take IntPtr as parameter and return uint
         /// </summary>
@@ -44,69 +103,6 @@ namespace oldlclr
             public IntPtrFuncIntPtr GetStatus;
         }
 
-
-
-
-
-        /// <summary>
-        /// Intanciate receiver in process heap
-        /// </summary>
-        /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_receiver_create")]
-        private static extern IntPtr CreateI();
-
-        /// <summary>
-        /// Increment reference count
-        /// </summary>
-        /// <param name="objPtr"></param>
-        /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_receiver_retain")]
-        private static extern uint Retain(IntPtr objPtr);
-
-        /// <summary>
-        /// Decrement reference count
-        /// </summary>
-        /// <param name="objPtr"></param>
-        /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_receiver_release")]
-        private static extern uint Release(IntPtr objPtr);
-
-
-        /// <summary>
-        /// set receiver handler
-        /// </summary>
-        /// <param name="objPtr"></param>
-        /// <param name="handler"></param>
-        /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_receiver_set_handler")]
-        private static extern int SetHandler(IntPtr objPtr, IntPtr handler);
-
-        /// <summary>
-        /// get receiver handler
-        /// </summary>
-        /// <param name="objPtr"></param>
-        /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_receiver_get_handler")]
-        private static extern IntPtr GetHandler(IntPtr objPtr);
-
-
-        /// <summary>
-        /// start to listening message from client
-        /// </summary>
-        /// <param name="objPtr"></param>
-        /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_receiver_start")]
-        private static extern int Start(IntPtr objPtr);
-
-
-        /// <summary>
-        /// stop to listening message from client
-        /// </summary>
-        /// <param name="objPtr"></param>
-        /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_receiver_stop_communication")]
-        private static extern int Stop(IntPtr objPtr);
-
         /// <summary>
         /// Native Object pointer
         /// </summary>
@@ -121,16 +117,14 @@ namespace oldlclr
             set => SetService(value);
         }
 
-
-
         private bool disposedValue = false; // To detect redundant calls
 
         /// <summary>
-        /// constructor 
+        /// constructor
         /// </summary>
         public Receiver()
         {
-            AttachRef(CreateI());
+            AttachRef(NativeMethods.CreateI());
         }
 
         ~Receiver()
@@ -142,7 +136,7 @@ namespace oldlclr
         {
             if (IntPtr.Zero != objPtr)
             {
-                Retain(objPtr);
+                _ = NativeMethods.Retain(objPtr);
             }
             AttachRef(objPtr);
         }
@@ -155,19 +149,17 @@ namespace oldlclr
         {
             if (IntPtr.Zero != ObjectPtr)
             {
-                Release(ObjectPtr);
+                _ = NativeMethods.Release(ObjectPtr);
             }
             ObjectPtr = objPtr;
-
         }
 
         public object Clone()
         {
             Receiver result = (Receiver)base.MemberwiseClone();
-            Retain(result.ObjectPtr);
+            _ = NativeMethods.Retain(result.ObjectPtr);
 
             return result;
-
         }
         protected virtual void Dispose(bool disposing)
         {
@@ -184,7 +176,6 @@ namespace oldlclr
             }
         }
 
-
         // This code added to correctly implement the disposable pattern.
         public void Dispose()
         {
@@ -194,13 +185,12 @@ namespace oldlclr
             GC.SuppressFinalize(this);
         }
 
-
         /// <summary>
         /// start listening to message from client
         /// </summary>
         public void Start()
         {
-            Start(ObjectPtr);
+            _ = NativeMethods.Start(ObjectPtr);
         }
 
         /// <summary>
@@ -208,9 +198,8 @@ namespace oldlclr
         /// </summary>
         public void Stop()
         {
-            Stop(ObjectPtr);
+            _ = NativeMethods.Stop(ObjectPtr);
         }
-
 
         /// <summary>
         /// get service
@@ -218,7 +207,7 @@ namespace oldlclr
         /// <returns></returns>
         public IService GetService()
         {
-            IntPtr objPtr = GetHandler(ObjectPtr);
+            IntPtr objPtr = NativeMethods.GetHandler(ObjectPtr);
 
             IService result = null;
             if (objPtr != IntPtr.Zero)
@@ -230,14 +219,13 @@ namespace oldlclr
             return result;
         }
 
-
         /// <summary>
         /// set service
         /// </summary>
         /// <param name="dataLinkService"></param>
         public void SetService(IService dataLinkService)
         {
-            IntPtr objPtr = GetHandler(ObjectPtr);
+            IntPtr objPtr = NativeMethods.GetHandler(ObjectPtr);
 
             if (objPtr != IntPtr.Zero)
             {
@@ -256,14 +244,10 @@ namespace oldlclr
                     DataLinkService = dataLinkService
                 };
 
-                SetHandler(ObjectPtr, recieverHdlr.UnmanagedPtr);
+                _ = NativeMethods.SetHandler(ObjectPtr, recieverHdlr.UnmanagedPtr);
 
                 recieverHdlr.Release();
-
             }
         }
-
-
-
     }
 }

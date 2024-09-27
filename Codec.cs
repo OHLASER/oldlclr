@@ -1,97 +1,88 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-
 namespace oldlclr
 {
-    public class Codec : IDisposable, ICloneable
+    public partial class Codec : IDisposable
     {
+        private static partial class NativeMethods
+        {
+            /// <summary>
+            /// Intanciate reciever in process heap
+            /// </summary>
+            /// <returns></returns>
+            [LibraryImport("oldl", EntryPoint = "oldl_codec_create")]
+            public static partial IntPtr CreateI();
 
+            /// <summary>
+            /// Increment reference count
+            /// </summary>
+            /// <param name="objPtr"></param>
+            /// <returns></returns>
+            [LibraryImport("oldl", EntryPoint = "oldl_codec_retain")]
+            public static partial uint Retain(IntPtr objPtr);
 
-        /// <summary>
-        /// Intanciate reciever in process heap
-        /// </summary>
-        /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_codec_create")]
-        private static extern IntPtr CreateI();
+            /// <summary>
+            /// Decrement reference count
+            /// </summary>
+            /// <param name="objPtr"></param>
+            /// <returns></returns>
+            [LibraryImport("oldl", EntryPoint = "oldl_codec_release")]
+            public static partial uint Release(IntPtr objPtr);
 
+            /// <summary>
+            /// get processing data
+            /// </summary>
+            /// <param name="objPtr"></param>
+            /// <returns></returns>
+            [LibraryImport("oldl", EntryPoint = "oldl_codec_get_processing_data")]
+            public static partial IntPtr GetProcessingData(IntPtr objPtr);
 
-        /// <summary>
-        /// Increment reference count
-        /// </summary>
-        /// <param name="objPtr"></param>
-        /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_codec_retain")]
-        private static extern uint Retain(IntPtr objPtr);
+            /// <summary>
+            /// set processing data
+            /// </summary>
+            /// <param name="objPtr"></param>
+            /// <returns></returns>
+            [LibraryImport("oldl", EntryPoint = "oldl_codec_set_processing_data")]
+            public static partial int SetProcessingData(IntPtr objPtr, IntPtr strPtr);
 
-        /// <summary>
-        /// Decrement reference count
-        /// </summary>
-        /// <param name="objPtr"></param>
-        /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_codec_release")]
-        private static extern uint Release(IntPtr objPtr);
+            /// <summary>
+            /// get processing data type
+            /// </summary>
+            /// <param name="objPtr"></param>
+            /// <returns></returns>
+            [LibraryImport("oldl", EntryPoint = "oldl_codec_get_data_type")]
+            public static partial IntPtr GetDataType(IntPtr objPtr);
 
+            /// <summary>
+            /// set processing data type
+            /// </summary>
+            /// <param name="objPtr"></param>
+            /// <returns></returns>
+            [LibraryImport("oldl", EntryPoint = "oldl_codec_set_data_type")]
+            public static partial int SetDataType(IntPtr objPtr, IntPtr strPtr);
 
-        /// <summary>
-        /// get processing data
-        /// </summary>
-        /// <param name="objPtr"></param>
-        /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_codec_get_processing_data")]
-        private static extern IntPtr GetProcessingData(IntPtr objPtr);
+            /// <summary>
+            /// decode form encoded string
+            /// </summary>
+            /// <param name="objPtr"></param>
+            /// <returns></returns>
+            [LibraryImport("oldl", EntryPoint = "oldl_codec_decode")]
+            public static partial int Decode(IntPtr objPtr, IntPtr strPtr);
 
-        /// <summary>
-        /// set processing data
-        /// </summary>
-        /// <param name="objPtr"></param>
-        /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_codec_set_processing_data")]
-        private static extern int SetProcessingData(IntPtr objPtr, IntPtr strPtr);
-
-
-
-        /// <summary>
-        /// get processing data type
-        /// </summary>
-        /// <param name="objPtr"></param>
-        /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_codec_get_data_type")]
-        private static extern IntPtr GetDataType(IntPtr objPtr);
-
-        /// <summary>
-        /// set processing data type
-        /// </summary>
-        /// <param name="objPtr"></param>
-        /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_codec_set_data_type")]
-        private static extern int SetDataType(IntPtr objPtr, IntPtr strPtr);
-
-
-        /// <summary>
-        /// decode form encoded string
-        /// </summary>
-        /// <param name="objPtr"></param>
-        /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_codec_decode")]
-        private static extern int Decode(IntPtr objPtr, IntPtr strPtr);
-
-
-
-        /// <summary>
-        /// encode to string
-        /// </summary>
-        /// <param name="objPtr"></param>
-        /// <returns></returns>
-        [DllImport("oldl", EntryPoint = "oldl_codec_encode")]
-        private static extern IntPtr Encode(IntPtr objPtr);
+            /// <summary>
+            /// encode to string
+            /// </summary>
+            /// <param name="objPtr"></param>
+            /// <returns></returns>
+            [LibraryImport("oldl", EntryPoint = "oldl_codec_encode")]
+            public static partial IntPtr Encode(IntPtr objPtr);
+        }
 
         /// <summary>
         /// Native Object pointer
         /// </summary>
         public IntPtr ObjectPtr { get; private set; }
-
-
 
         /// <summary>
         /// processing data
@@ -110,9 +101,8 @@ namespace oldlclr
                 {
                     using Str strObj = new(value);
 
-                    SetDataType(ObjectPtr, strObj.ObjectPtr);
+                    _ = NativeMethods.SetDataType(ObjectPtr, strObj.ObjectPtr);
                 }
-
             }
         }
 
@@ -130,15 +120,14 @@ namespace oldlclr
             set => SetProcessingData(value);
         }
 
-
         private bool disposedValue = false; // To detect redundant calls
 
         /// <summary>
-        /// constructor 
+        /// constructor
         /// </summary>
         public Codec()
         {
-            AttachRef(CreateI());
+            AttachRef(NativeMethods.CreateI());
         }
 
         ~Codec()
@@ -150,7 +139,7 @@ namespace oldlclr
         {
             if (IntPtr.Zero != objPtr)
             {
-                Retain(objPtr);
+                _ = NativeMethods.Retain(objPtr);
             }
             AttachRef(objPtr);
         }
@@ -163,14 +152,9 @@ namespace oldlclr
         {
             if (IntPtr.Zero != ObjectPtr)
             {
-                Release(ObjectPtr);
+                _ = NativeMethods.Release(ObjectPtr);
             }
             ObjectPtr = objPtr;
-        }
-
-        public object Clone()
-        {
-            throw new NotImplementedException();
         }
 
         protected virtual void Dispose(bool disposing)
@@ -188,7 +172,6 @@ namespace oldlclr
             }
         }
 
-
         // This code added to correctly implement the disposable pattern.
         public void Dispose()
         {
@@ -198,14 +181,13 @@ namespace oldlclr
             GC.SuppressFinalize(this);
         }
 
-
         /// <summary>
         /// Get processing data as str
         /// </summary>
         /// <returns></returns>
         private Str GetProcessingDataAsStr()
         {
-            IntPtr strPtr = GetProcessingData(ObjectPtr);
+            IntPtr strPtr = NativeMethods.GetProcessingData(ObjectPtr);
             Str result = null;
             if (IntPtr.Zero != strPtr)
             {
@@ -213,7 +195,6 @@ namespace oldlclr
             }
 
             return result;
-
         }
 
         /// <summary>
@@ -232,7 +213,6 @@ namespace oldlclr
             {
                 SetProcessingDataAsStr(null);
             }
-
         }
 
         /// <summary>
@@ -243,11 +223,11 @@ namespace oldlclr
         {
             if (strData != null)
             {
-                SetProcessingData(ObjectPtr, strData.ObjectPtr);
+                _ = NativeMethods.SetProcessingData(ObjectPtr, strData.ObjectPtr);
             }
             else
             {
-                SetProcessingData(ObjectPtr, IntPtr.Zero);
+                _ = NativeMethods.SetProcessingData(ObjectPtr, IntPtr.Zero);
             }
         }
 
@@ -257,7 +237,7 @@ namespace oldlclr
         /// <returns></returns>
         private Str GetDataTypeAsStr()
         {
-            IntPtr typePtr = GetDataType(ObjectPtr);
+            IntPtr typePtr = NativeMethods.GetDataType(ObjectPtr);
             Str result = null;
             if (IntPtr.Zero != typePtr)
             {
@@ -267,19 +247,17 @@ namespace oldlclr
             return result;
         }
 
-
         internal void Decode(Str encodedStr)
         {
             if (encodedStr != null)
             {
-
-                Decode(ObjectPtr, encodedStr.ObjectPtr);
+                _ = NativeMethods.Decode(ObjectPtr, encodedStr.ObjectPtr);
             }
         }
 
         internal Str EncodeI()
         {
-            IntPtr encodedPtr = Encode(ObjectPtr);
+            IntPtr encodedPtr = NativeMethods.Encode(ObjectPtr);
 
             Str result = null;
             if (IntPtr.Zero != encodedPtr)
@@ -299,6 +277,5 @@ namespace oldlclr
             using Str strData = EncodeI();
             return strData?.Contents;
         }
-
     }
 }

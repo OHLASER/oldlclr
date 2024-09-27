@@ -6,6 +6,7 @@ namespace oldlclr
 {
     public class ReceiverHandler
     {
+        private readonly object _lockObject = new();
         /// <summary>
         /// Unmanaged object for ReceiverHandler interface
         /// </summary>
@@ -48,8 +49,7 @@ namespace oldlclr
                 string magicWord = "oh-laser";
                 byte[] byteArray = Encoding.UTF8.GetBytes(magicWord);
 
-                int result;
-                result = (byteArray[0] << (8 * 3))
+                int result = (byteArray[0] << (8 * 3))
                     | (byteArray[1] << (8 * 2))
                     | (byteArray[2] << (8 * 1))
                     | byteArray[3];
@@ -57,7 +57,6 @@ namespace oldlclr
                 return result;
             }
         }
-
 
         /// <summary>
         /// reciever handler
@@ -74,7 +73,6 @@ namespace oldlclr
             };
         }
 
-
         /// <summary>
         /// release unmanaged object
         /// </summary>
@@ -86,10 +84,7 @@ namespace oldlclr
             var vtbl = Marshal.PtrToStructure<Receiver.HandlerIVtbl>(objLayout.Vtbl);
 
             vtbl.Release(objPtr);
-
-
         }
-
 
         /// <summary>
         /// Virtual function table
@@ -118,13 +113,11 @@ namespace oldlclr
                 GetStatus = GetStatus
             };
 
-            IntPtr unmanagedPtr;
-            unmanagedPtr = Marshal.AllocHGlobal(Marshal.SizeOf<UnmanagedObjectLayout>());
+            IntPtr unmanagedPtr = Marshal.AllocHGlobal(Marshal.SizeOf<UnmanagedObjectLayout>());
 
             if (unmanagedPtr != IntPtr.Zero)
             {
-                IntPtr vtblPtr;
-                vtblPtr = Marshal.AllocHGlobal(Marshal.SizeOf<Receiver.HandlerIVtbl>());
+                IntPtr vtblPtr = Marshal.AllocHGlobal(Marshal.SizeOf<Receiver.HandlerIVtbl>());
                 if (vtblPtr != IntPtr.Zero)
                 {
                     Marshal.StructureToPtr(Vtbl, vtblPtr, false);
@@ -143,10 +136,9 @@ namespace oldlclr
                 }
             }
 
-            this.UnmanagedPtr = unmanagedPtr;
-            Retain(this.UnmanagedPtr);
+            UnmanagedPtr = unmanagedPtr;
+            Retain(UnmanagedPtr);
         }
-
 
         /// <summary>
         /// increment reference
@@ -156,7 +148,7 @@ namespace oldlclr
         public uint Retain(IntPtr obj)
         {
             uint result;
-            lock (this)
+            lock (_lockObject)
             {
                 result = ++RefCount;
             }
@@ -172,32 +164,25 @@ namespace oldlclr
         public uint Release(IntPtr obj)
         {
             uint result;
-            lock (this)
+            lock (_lockObject)
             {
                 result = --RefCount;
             }
             if (result == 0)
             {
-
                 UnmanagedObjectLayout rawObject = Marshal.PtrToStructure<UnmanagedObjectLayout>(obj);
 
                 if (UnmanagedPtr != IntPtr.Zero)
                 {
-                    UnmanagedObjectLayout UnmanagedObject;
-
-                    UnmanagedObject = (UnmanagedObjectLayout)Marshal.PtrToStructure(UnmanagedPtr, typeof(UnmanagedObjectLayout));
-
+                    UnmanagedObjectLayout UnmanagedObject = (UnmanagedObjectLayout)Marshal.PtrToStructure(UnmanagedPtr, typeof(UnmanagedObjectLayout));
 
                     Marshal.DestroyStructure(UnmanagedObject.Vtbl, typeof(Receiver.HandlerIVtbl));
                     Marshal.FreeHGlobal(UnmanagedObject.Vtbl);
-                    GCHandle thisHandle;
-                    thisHandle = GCHandle.FromIntPtr(UnmanagedObject.ObjectPtr);
+                    GCHandle thisHandle = GCHandle.FromIntPtr(UnmanagedObject.ObjectPtr);
                     thisHandle.Free();
                     Marshal.DestroyStructure(UnmanagedPtr, typeof(UnmanagedObjectLayout));
                     UnmanagedPtr = IntPtr.Zero;
-
                 }
-
             }
 
             return result;
@@ -251,7 +236,6 @@ namespace oldlclr
                 DateTime? startedProcessing = dataLinkService.TimeOfStartedProcessing;
                 string dataName = dataLinkService.DataName;
 
-
                 Status status = new();
                 status.SetStartedTimeOfLoading(startedLoading);
                 status.SetFinishedTimeOfLoading(finishedLoading);
@@ -267,6 +251,5 @@ namespace oldlclr
         }
 
         private uint RefCount;
-
     }
 }

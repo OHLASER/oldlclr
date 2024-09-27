@@ -47,7 +47,6 @@ namespace oldlclr
             get;
         }
 
-
         /// <summary>
         /// Processing count
         /// </summary>
@@ -64,17 +63,11 @@ namespace oldlclr
             get;
         }
 
-
-
         /// <summary>
         /// load data processing data
         /// </summary>
         /// <param name="dataType"></param>
         /// <param name="data"></param>
         ErrorCode LoadProcessingData(string dataType, byte[] data, IntPtr dataName);
-
-
-
-
     }
 }

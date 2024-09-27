@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-
 namespace oldlclr
 {
     public class Status : IDisposable, ICloneable
@@ -29,7 +28,6 @@ namespace oldlclr
         [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_release")]
         private static extern uint Release(IntPtr objPtr);
 
-
         /// <summary>
         /// Set started time of processing
         /// </summary>
@@ -45,8 +43,6 @@ namespace oldlclr
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_get_started_time_of_processing")]
         private static extern IntPtr GetStartedTimeOfProcessing(IntPtr objPtr);
-
-
 
         /// <summary>
         /// Set started time of loading
@@ -64,9 +60,6 @@ namespace oldlclr
         [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_get_started_time_of_loading")]
         private static extern IntPtr GetStartedTimeOfLoading(IntPtr objPtr);
 
-
-
-
         /// <summary>
         /// Set finished time of processing
         /// </summary>
@@ -82,8 +75,6 @@ namespace oldlclr
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_get_finished_time_of_processing")]
         private static extern IntPtr GetFinishedTimeOfProcessing(IntPtr objPtr);
-
-
 
         /// <summary>
         /// Set finished time of loading
@@ -101,8 +92,6 @@ namespace oldlclr
         [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_get_data_name")]
         private static extern IntPtr GetDataName(IntPtr objPtr);
 
-
-
         /// <summary>
         /// Set data name
         /// </summary>
@@ -111,7 +100,6 @@ namespace oldlclr
         [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_set_data_name")]
         private static extern int SetDataName(IntPtr objPtr, IntPtr strPtr);
 
-
         /// <summary>
         /// Get finished time of loading
         /// </summary>
@@ -119,7 +107,6 @@ namespace oldlclr
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_get_finished_time_of_loading")]
         private static extern IntPtr GetFinishedTimeOfLoading(IntPtr objPtr);
-
 
         /// <summary>
         /// Set processed count
@@ -137,9 +124,6 @@ namespace oldlclr
         [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_get_processed_count")]
         private static extern int GetProcessedCount(IntPtr objPtr, out uint processedCount);
 
-
-
-
         /// <summary>
         /// Set processed count
         /// </summary>
@@ -156,7 +140,6 @@ namespace oldlclr
         [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_get_processing_status")]
         private static extern int GetStatusCode(IntPtr objPtr, ref int statusCode);
 
-
         /// <summary>
         /// To json string
         /// </summary>
@@ -164,9 +147,6 @@ namespace oldlclr
         /// <returns></returns>
         [DllImport("oldl", EntryPoint = "oldl_receiver_hdlr_status_to_json")]
         private static extern IntPtr ToJsonStr(IntPtr objPtr);
-
-
-
 
         /// <summary>
         /// date time format
@@ -176,7 +156,6 @@ namespace oldlclr
         /// <summary>
         /// Laser processed count
         /// </summary>
-
         public uint ProcessedCount
         {
             get
@@ -199,7 +178,6 @@ namespace oldlclr
         /// <summary>
         /// Native Object pointer
         /// </summary>
-
         public IntPtr ObjectPtr { get; private set; }
 
         private bool disposedValue;
@@ -211,8 +189,6 @@ namespace oldlclr
         {
             AttachRef(CreateI());
         }
-
-
 
         /// <summary>
         /// destructor
@@ -256,7 +232,6 @@ namespace oldlclr
             Retain(result.ObjectPtr);
 
             return result;
-
         }
         protected virtual void Dispose(bool disposing)
         {
@@ -273,7 +248,6 @@ namespace oldlclr
             }
         }
 
-
         // This code added to correctly implement the disposable pattern.
         public void Dispose()
         {
@@ -282,7 +256,6 @@ namespace oldlclr
             // TODO: uncomment the following line if the finalizer is overridden above.
             GC.SuppressFinalize(this);
         }
-
 
         /// <summary>
         /// set started time of processing
@@ -434,7 +407,6 @@ namespace oldlclr
             }
         }
 
-
         /// <summary>
         /// set data name
         /// </summary>
@@ -459,7 +431,6 @@ namespace oldlclr
                 SetDataName(strObj);
             }
         }
-
 
         /// <summary>
         /// set finished time of processing
@@ -503,7 +474,6 @@ namespace oldlclr
         {
             SetStatusCode(ObjectPtr, (int)code);
         }
-
 
         /// <summary>
         /// get status code
