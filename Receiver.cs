@@ -188,9 +188,10 @@ namespace oldlclr
         /// <summary>
         /// start listening to message from client
         /// </summary>
-        public void Start()
+        public void Start(IService service)
         {
             _ = NativeMethods.Start(ObjectPtr);
+            Service = service;
         }
 
         /// <summary>
@@ -199,6 +200,8 @@ namespace oldlclr
         public void Stop()
         {
             _ = NativeMethods.Stop(ObjectPtr);
+            Service = null;
+            Dispose();
         }
 
         /// <summary>
